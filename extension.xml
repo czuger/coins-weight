@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- This is our MVP for the Extension Tutorial -->
+<root release="3.0" version="3">
+	<properties>
+		<name>Coins weight</name>
+		<version>0.0.1</version>
+		<author>Cédric Zuger</author>
+		<description>An extension that compute and show the weight of the coins.
+			
+		</description>
+	</properties>
+	
+		
+	<base>
+		<script name="CoinsWeight" file="scripts/coins_weight.lua" />
+		
+		<string name="char_label_treasurload">Coins</string>
+			
+		<windowclass name="charsheet_inventory_contents" merge="join">
+			<sheetdata>
+				
+				<!--simplenumber name="treasureload" source="encumbrance.load -->
+				<simplenumber name="treasureload" source="encumbrance.treasure">
+					<anchored to="encumbranceload" width="60" height="30">
+						<top anchor="topleft" relation="relative" offset="-30" />
+						<left offset="-80" />
+					</anchored>
+					<frame name="fieldlight" offset="7,5,7,5" />
+					<font>sheetlabel</font>
+					<readonly />
+				</simplenumber>
+				
+				<label_fieldtop name="treasureload_label">
+					<anchored to="treasureload" />
+					<static textres="char_label_treasurload" />
+				</label_fieldtop>	
+				
+				<number_dropadd name="coinamount1">
+				  <script>
+					function onValueChanged()
+						CoinsWeight.onCoinsValueChanged( window.getDatabaseNode() );
+					end			
+				  </script>
+				</number_dropadd>			
+
+				<number_dropadd name="coinamount2">
+				  <script>
+					function onValueChanged()
+						CoinsWeight.onCoinsValueChanged( window.getDatabaseNode() );
+					end			
+				  </script>
+				</number_dropadd>	
+
+				<number_dropadd name="coinamount3">
+				  <script>
+					function onValueChanged()
+						CoinsWeight.onCoinsValueChanged( window.getDatabaseNode() );
+					end			
+				  </script>
+				</number_dropadd>	
+
+				<number_dropadd name="coinamount4">
+				  <script>
+					function onValueChanged()
+						CoinsWeight.onCoinsValueChanged( window.getDatabaseNode() );
+					end			
+				  </script>
+				</number_dropadd>	
+
+				<number_dropadd name="coinamount5">
+				  <script>
+					function onValueChanged()
+						CoinsWeight.onCoinsValueChanged( window.getDatabaseNode() );
+					end			
+				  </script>
+				</number_dropadd>	
+
+				<number_dropadd name="coinamount6">
+				  <script>
+					function onValueChanged()
+						CoinsWeight.onCoinsValueChanged( window.getDatabaseNode() );
+					end			
+				  </script>
+				</number_dropadd>					
+			
+			</sheetdata>
+		</windowclass>	
+	
+	</base>
+
+</root>
