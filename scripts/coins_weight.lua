@@ -11,7 +11,7 @@ function onInit()
 		Comm.registerSlashHandler("ccweight", computeCoinsWeight);
 	end
 end
-		
+			
 function computeCoinsWeight(command, parameters)
 	if User.isHost() then
 		for _,v in pairs(DB.getChildren("partysheet.partyinformation")) do

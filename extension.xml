@@ -17,7 +17,35 @@
 		<string name="char_label_treasurload">Coins</string>
 			
 		<windowclass name="charsheet_inventory_contents" merge="join">
+		
+						<script>
+						
+function sayHello()
+	Debug.chat( 'hooray' );
+	ManagerItem.handleItemTransfer();
+end
+								
+					function onInit()					
+						local node = getDatabaseNode();
+						
+						Debug.chat( node );
+						Debug.chat( DB.getPath(node, "*.weight") );
+							
+						DB.addHandler(DB.getPath(node, "*.weight"), "onUpdate", sayHello);
+						DB.addHandler(DB.getPath(node, "*.count"), "onUpdate", sayHello);
+						DB.addHandler(DB.getPath(node, "*.carried"), "onUpdate", sayHello);
+						
+						OOBManager.registerOOBMsgHandler("transferitem", sayHello);
+
+						Debug.chat( 'hooray' );
+					end	
+
+	function onListChanged()
+						Debug.chat( 'hooray update' );
+end					
+				</script>
 			<sheetdata>
+		
 				
 				<!--simplenumber name="treasureload" source="encumbrance.load -->
 				<simplenumber name="treasureload" source="encumbrance.treasure">
