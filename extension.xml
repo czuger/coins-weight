@@ -3,65 +3,65 @@
 <root release="3.0" version="3">
 	<properties>
 		<name>Coins weight</name>
-		<version>0.0.1</version>
+		<version>0.0.2</version>
 		<author>Cédric Zuger</author>
-		<description>An extension that compute and show the weight of the coins.
-			
+		<description>An extension that compute and show the weight of the coins.	
 		</description>
 	</properties>
 	
 		
 	<base>
 		<script name="CoinsWeight" file="scripts/coins_weight.lua" />
+		<!-- script name="ManagerItem" file="scripts/coins_weight.lua" / -->
 		
 		<string name="char_label_treasurload">Coins</string>
-			
-		<windowclass name="charsheet_inventory_contents" merge="join">
-		
-						<script>
-						
-function sayHello()
-	Debug.chat( 'hooray' );
-	ManagerItem.handleItemTransfer();
-end
-								
-					function onInit()					
-						local node = getDatabaseNode();
-						
-						Debug.chat( node );
-						Debug.chat( DB.getPath(node, "*.weight") );
-							
-						DB.addHandler(DB.getPath(node, "*.weight"), "onUpdate", sayHello);
-						DB.addHandler(DB.getPath(node, "*.count"), "onUpdate", sayHello);
-						DB.addHandler(DB.getPath(node, "*.carried"), "onUpdate", sayHello);
-						
-						OOBManager.registerOOBMsgHandler("transferitem", sayHello);
-
-						Debug.chat( 'hooray' );
-					end	
-
-	function onListChanged()
-						Debug.chat( 'hooray update' );
-end					
-				</script>
-			<sheetdata>
-		
+		<string name="char_label_totalload">Total</string>
 				
-				<!--simplenumber name="treasureload" source="encumbrance.load -->
+		<windowclass name="charsheet_inventory_contents" merge="join">	
+			<sheetdata>		
+						
 				<simplenumber name="treasureload" source="encumbrance.treasure">
 					<anchored to="encumbranceload" width="60" height="30">
 						<top anchor="topleft" relation="relative" offset="-30" />
-						<left offset="-80" />
+						<left offset="-70" />
 					</anchored>
 					<frame name="fieldlight" offset="7,5,7,5" />
 					<font>sheetlabel</font>
 					<readonly />
+				  <script>
+					function onValueChanged()
+						CoinsWeight.recomputeTotalWeight( window.getDatabaseNode() );
+					end			
+				  </script>					
 				</simplenumber>
+				
+				<simplenumber name="totalload" source="encumbrance.total">
+					<anchored to="treasureload" width="60" height="30">
+						<top anchor="topleft" relation="relative" offset="-30" />
+						<left offset="-70" />
+					</anchored>
+					<frame name="fieldlight" offset="7,5,7,5" />
+					<font>sheetlabel</font>
+					<readonly />
+				</simplenumber>				
 				
 				<label_fieldtop name="treasureload_label">
 					<anchored to="treasureload" />
 					<static textres="char_label_treasurload" />
-				</label_fieldtop>	
+				</label_fieldtop>
+				
+				<label_fieldtop name="totalload_label">
+					<anchored to="totalload" />
+					<static textres="char_label_totalload" />
+				</label_fieldtop>				
+		
+				<simplenumber name="encumbranceload" source="encumbrance.load">
+				  <script>
+					function onValueChanged()
+						CoinsWeight.recomputeTotalWeight( window.getDatabaseNode() );
+					end			
+				  </script>
+				</simplenumber>
 				
 				<number_dropadd name="coinamount1">
 				  <script>
